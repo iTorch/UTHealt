@@ -62,7 +62,6 @@ class logout_view(RedirectView):
 #        context = super().get_context_data( **kwargs)
 #        context['title'] = 'Iniciar Sesion'
 #        return context
-
 class login_view(FormView):
     form_class = AuthenticationForm
     template_name = 'login/login.html'
@@ -83,4 +82,7 @@ class login_view(FormView):
         context['title'] = 'Iniciar Sesion'
         return context
 
+def index(request):
+
+    return render(request, 'login/index.html',)
 
