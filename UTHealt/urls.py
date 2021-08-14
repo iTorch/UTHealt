@@ -15,12 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from apps.Doctors.views import indexDoctor, buscarPac
 from apps.user.views import SolicitudCreate, login_view, logout_view, index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('apps.api.urls')),
     path('registro/', SolicitudCreate.as_view(), name ='registro'),
+
+    #rutas de doctor
+    path('doctor/',indexDoctor, name = 'index'),
+    path('doctor/buscar/',buscarPac, name='buscar'),
 
     path('login/',login_view.as_view(), name='login'),
     path('logout/' ,logout_view.as_view(), name='logout'),
