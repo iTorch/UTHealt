@@ -32,20 +32,17 @@
             <h1>Datos del Paciente </h1> {%for e in edadT%}{{e.0}}{%endfor%}
                 <table class="table col-5">
                 <tbody>
-                   
-                {%if buPacs%}
-                {%for b in object_list%}
                     <tr>
                         <th scope="col">nombre</th>
-                        <td>{{b.nombre}}</td>
+                        <td>{{object.nombre}}</td>
                     </tr>
                     <tr>
                         <th scope="col">Apellido paterno</th>
-                        <td>{{b.apellido_paterno}}</td> 
+                        <td>{{object.apellido_paterno}}</td>
                     </tr>
                     <tr>
                         <th scope="col">Apellido materno</th>
-                        <td>{{b.apellido_materno}}</td>
+                        <td>{{object.apellido_materno}}</td>
                     </tr>
                     <tr>
                         <th scope="col">Edad</th>
@@ -53,30 +50,26 @@
                     </tr>
                     <tr>
                         <th scope="col">Genero</th>
-                        <td>{{b.genero}}</td>
+                        <td>{{object.genero}}</td>
                     </tr>
                     <tr>
                         <th scope="col">Altura</th>
-                        <td>{{b.altura}}</td>
+                        <td>{{object.altura}}</td>
                     </tr>
                     <tr>
                         <th scope="col">Peso</th>
-                        <td>{{b.peso}}</td>
+                        <td>{{object.peso}}</td>
                     </tr>
                     
-                {%endfor%}
-                {%else%}
-                    <center><h3 class="text alert-danger">No se encontro al paciente</h3></center>
-                {%endif%}
+
                 </tbody>
                 </table> 
         </div>
         <div class="col-lg-6">
             <h1>Signos del Paciente </h1>
             <table class="table col-10">
-            <tbody>  
-            {%if busSig%}
-            {%for s in object_list%}
+            <tbody>
+            {%for s in signos%}
                 <tr>
                     <th scope="col">Oxigeno</th>
                     <td>{{s.oxigeno}}</td>
@@ -99,9 +92,7 @@
                 </tr>
                 
             {%endfor%}
-            {%else%}
-                <center><h3 class="text alert-danger">No se encontro al paciente</h3></center>
-            {%endif%}
+
             </tbody>
             </table> 
         </div>

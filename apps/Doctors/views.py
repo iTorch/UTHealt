@@ -2,11 +2,11 @@ from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.views import View,generic
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from apps.Doctors.models import Persona, SignosVitales
 import json
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
+#from dateutil.relativedelta import relativedelta
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
@@ -43,13 +43,13 @@ def buscarPac(request):
                 fN = bs.fecha_nacimiento
 
             #se calcula la edad con base a la fecha actual
-            edad = relativedelta(datetime.now(), fN)
-            e = str((edad.years))
+            #edad = relativedelta(datetime.now(), fN)
+            #e = str((edad.years))
  
-            bs = SignosVitales.objects.filter(id_persona = id)
-            bus = {'buPacs':bp,'edadT':e,'busSig':bs}
+            #bs = SignosVitales.objects.filter(id_persona = id)
+            #bus = {'buPacs':bp,'edadT':e,'busSig':bs}
             # print(bus)
-            return render(request, 'doctor/buscar.html',bus )
+            #return render(request, 'doctor/buscar.html',bus )
         else: 
             data = {'msg':'Error no hay pacientes registrados', }
             return render(request, 'indexDoctor/indexDoctor.html',data )
@@ -79,8 +79,13 @@ class PacientesList(ListView):
 
         #retorna nombre con edgar
         #return Persona.objects.filter(nombre = 'edgar')"""
-    
 
 
-    
-        
+class PacienteDetalle(DetailView):
+    model = Persona
+    template_name = 'doctor/buscar.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['signos'] = SignosVitales.objects.filter(id_persona= self.kwargs['pk'])
+        return context
