@@ -66,7 +66,9 @@
                 <td>{{paciente.apellido_materno}}</td>
                 <td>{{paciente.fecha_nacimiento}}</td>
                 <td>{{paciente.genero}}</td>
-                <td><input class="btn btn-primary btnVer"  persona ="{{paciente.id_persona}}"  value="Ver signos" type="submit"></td>
+                <td><form method="POST">
+                  <input class="btn btn-primary btnVer"  persona ="{{paciente.id_persona}}"  value="Ver signos" type="submit"></td>
+                </form>
             </tr>
           {%endfor%}
           {%else%}

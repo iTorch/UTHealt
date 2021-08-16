@@ -7,6 +7,8 @@ from apps.Doctors.models import Persona, SignosVitales
 import json
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 
@@ -57,18 +59,19 @@ class PacientesList(ListView):
     model = Persona
     template_name = 'doctor/indexDoctor.html'
     
-
-    """def dispatch(request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)"""
+    @method_decorator(csrf_exempt)
+    def dispatch(self,request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def post(self,request, *args, **kwargs):
-        p = Persona.objects.get(id_persona = '2').toJson()
-        data = {'msg':p}
+        data = {}
+        doc = Persona.objects.get(pk = request.POST['id']).toJson()
+        
+        #p = Persona.objects.get(id_persona = '2').toJson()
+        #data = {'msg':p}
         #se comprueba que hay en el body 
         #print(request.POST)
-
-
-        return JsonResponse(data)
+        return JsonResponse(doc)
 
         #funcion que me retorna todo del modelo 
     """ def get_queryset(self):
