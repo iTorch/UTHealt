@@ -2,7 +2,7 @@ $(function(){
     $('.btnVer').on('click',function(evt){
         evt.preventDefault();
         let id_persona =$(this).attr('persona');
-        console.log(id_persona);
+        //console.log(id_persona);
 
         $.ajax({
             URL: '{%url "doctor:index"%}',

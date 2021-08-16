@@ -64,13 +64,9 @@ class PacientesList(ListView):
         return super().dispatch(request, *args, **kwargs)
 
     def post(self,request, *args, **kwargs):
-        data = {}
-        doc = Persona.objects.get(pk = request.POST['id']).toJson()
         
-        #p = Persona.objects.get(id_persona = '2').toJson()
-        #data = {'msg':p}
-        #se comprueba que hay en el body 
-        #print(request.POST)
+        doc = {}
+        doc = Persona.objects.get(pk = request.POST['id']).toJson()
         return JsonResponse(doc)
 
         #funcion que me retorna todo del modelo 
