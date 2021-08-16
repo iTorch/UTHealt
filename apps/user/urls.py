@@ -1,4 +1,6 @@
 from django.urls import path
+
+
 from apps.user.views import *
 urlpatterns = [
     path('registro/', SolicitudCreate.as_view(), name ='registro'),

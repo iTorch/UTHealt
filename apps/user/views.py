@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.forms import AuthenticationForm
-from django.http import  HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.urls import reverse_lazy
@@ -13,14 +13,15 @@ from apps.user.forms import FormUser,FormPersona
 
 class SolicitudCreate(CreateView):
     model = User
-    template_name = 'login/registro.html'
     form_class = FormUser
     second_form_class = FormPersona
+
+    template_name = 'login/registro.html'
     success_url = reverse_lazy('index')
 
-    def get_context_data(self,  **kwargs):
+
+    def get_context_data(self, **kwargs):
         context = super(SolicitudCreate, self).get_context_data(**kwargs)
-        #mandar los formularios en el contexto
         if 'form' not in context:
             context['form'] = self.form_class(self.request.GET)
         if 'form2' not in context:
@@ -29,17 +30,32 @@ class SolicitudCreate(CreateView):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object
-        #recoger de los formularios la informacion
+        # recoger la informacion de los formularios
+
         form = self.form_class(request.POST)
         form2 = self.second_form_class(request.POST)
-        #evaluar si estos valores son validos para guardarlos
+
+        # evaluar si son valores son validos para guardarlos
         if form.is_valid() and form2.is_valid():
-            registro = form.save(commit=False)#no guardar hasta que guardemos los datos del seguando form
+            pwd = form.cleaned_data['password']
+            registro = form.save(commit=False)  # no guardar hasta que guardemos los datos del seguando form
+
+            # encryptar password
+            if registro.pk is None:
+                registro.set_password(pwd)
+            else:
+                user = User.objects.get(pk=registro.pk)
+                if user.password != pwd:
+                    registro.set_password(pwd)
+
             registro.persona = form2.save()
             registro.save()
+            for g in form.cleaned_data['groups']:
+                registro.groups.add(g)    #guardar grupos
+
             return HttpResponseRedirect(self.get_success_url())
         else:
-            return self.render_to_response(self.get_context_data(form=form,form2=form2))
+            return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
 class logout_view(RedirectView):
     pattern_name = 'login'
