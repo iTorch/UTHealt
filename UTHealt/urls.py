@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from apps.Doctors.views import indexDoctor, buscarPac
+
 from apps.user.views import SolicitudCreate, login_view, logout_view, index
 
 urlpatterns = [
@@ -24,8 +24,7 @@ urlpatterns = [
     path('registro/', SolicitudCreate.as_view(), name ='registro'),
 
     #rutas de doctor
-    path('doctor/',indexDoctor, name = 'index'),
-    path('doctor/buscar/',buscarPac, name='buscar'),
+    path('doctors/',include("apps.Doctors.urls")),
 
     path('login/',login_view.as_view(), name='login'),
     path('logout/' ,logout_view.as_view(), name='logout'),

@@ -34,7 +34,7 @@
                 <tbody>
                    
                 {%if buPacs%}
-                {%for b in buPacs%}
+                {%for b in object_list%}
                     <tr>
                         <th scope="col">nombre</th>
                         <td>{{b.nombre}}</td>
@@ -76,7 +76,7 @@
             <table class="table col-10">
             <tbody>  
             {%if busSig%}
-            {%for s in busSig%}
+            {%for s in object_list%}
                 <tr>
                     <th scope="col">Oxigeno</th>
                     <td>{{s.oxigeno}}</td>
@@ -109,8 +109,5 @@
       </div>
       <h1>{%csrf_token%}</h1>
 </body>
-<script>
- const csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
 
-</script>
 </html>

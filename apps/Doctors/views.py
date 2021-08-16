@@ -1,7 +1,8 @@
 from django.http.response import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from django.views import View
+from django.views import View,generic
+from django.views.generic import ListView
 from apps.Doctors.models import Persona, SignosVitales
 import json
 from datetime import datetime
@@ -32,30 +33,55 @@ def indexDoctor(request):
 
 def buscarPac(request):
     
-    bp =Persona.objects.filter(nombre='dasd')
-    if len(bp)>0:
-        #se hace el recorrido 
-        for bs in bp:
-             id = bs.id_persona
-             fN = bs.fecha_nacimiento
+        bp =Persona.objects.filter(id_persona="1")
+        if len(bp)>0:
+            #se hace el recorrido 
+            for bs in bp:
+                id = bs.id_persona
+                fN = bs.fecha_nacimiento
 
-        #se calcula la edad con base a la fecha actual
-        edad = relativedelta(datetime.now(), fN)
-        e = str((edad.years))
+            #se calcula la edad con base a la fecha actual
+            edad = relativedelta(datetime.now(), fN)
+            e = str((edad.years))
  
-        bs = SignosVitales.objects.filter(id_persona = id)
-        bus = {'buPacs':bp,'edadT':e,'busSig':bs}
-       # print(bus)
-        return render(request, 'doctor/buscar.html',bus )
-    else: 
-        data = {'msg':'Error no hay pacientes registrados', }
-        return render(request, 'indexDoctor/indexDoctor.html',data )
+            bs = SignosVitales.objects.filter(id_persona = id)
+            bus = {'buPacs':bp,'edadT':e,'busSig':bs}
+            # print(bus)
+            return render(request, 'doctor/buscar.html',bus )
+        else: 
+            data = {'msg':'Error no hay pacientes registrados', }
+            return render(request, 'indexDoctor/indexDoctor.html',data )
     
 
-class PacienteSignos(View):
-    def get(self,request):
-
-        pass
+class PacientesList(ListView):
+    model = Persona
+    template_name = 'doctor/indexDoctor.html'
     
-    def post(self,request):
-        pass
+
+    """def dispatch(request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)"""
+
+    def post(self,request, *args, **kwargs):
+        p = Persona.objects.get(id_persona = '2').toJson()
+        data = {'msg':p}
+        #se comprueba que hay en el body 
+        #print(request.POST)
+
+
+        return JsonResponse(data)
+
+        #funcion que me retorna todo del modelo 
+    """ def get_queryset(self):
+        #retorna nombres que empiecen con 
+        #return Persona.objects.filter(nombre__startswith="ed")
+
+        #retorna todo del modelo
+        return Persona.objects.all()
+
+        #retorna nombre con edgar
+        #return Persona.objects.filter(nombre = 'edgar')"""
+    
+
+
+    
+        
