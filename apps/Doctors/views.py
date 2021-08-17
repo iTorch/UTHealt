@@ -9,6 +9,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -21,6 +22,7 @@ class PacientesList(ListView):
     template_name = 'doctor/indexDoctor.html'
     
     #decorador de los metodos POST
+    #@login_required
     @method_decorator(csrf_exempt)
     def dispatch(self,request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -41,7 +43,8 @@ class PacienteDetalle(DetailView):
     def get_context_data(self, **kwargs):
         #se optiene el data del id 
         context = super().get_context_data(**kwargs)
-        #se genera el nuevo contexto y el modelo signos con base al id 
-        context['signos'] = SignosVitales.objects.filter(id_persona= self.kwargs['pk'])
-        #se regresa el contexto 
+        #se genera el nuevo contexto y el modelo signos con base al id y recupera el ultimo registro
+        context['signos'] = SignosVitales.objects.filter(id_persona= self.kwargs['pk']).last()
+        
+        #se regresa el contexto
         return context

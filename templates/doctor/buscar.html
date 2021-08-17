@@ -70,33 +70,33 @@
             <h1>Signos del Paciente </h1>
             <table class="table table-bordered border-primary ">
             <tbody>
-            {%for s in signos%}
+            
                 <tr>
                     <th scope="col">Oxigeno</th>
-                    <td>{{s.oxigeno}}</td>
+                    <td>{{signos.oxigeno}}</td>
                 </tr>
                 <tr>
                     <th scope="col">Temperatura</th>
-                    <td>{{s.temperatura}}</td> 
+                    <td>{{signos.temperatura}}</td> 
                 </tr>
                 <tr>
                     <th scope="col">Calorias quemadas</th>
-                    <td>{{s.calorias_quemadas}}</td>
+                    <td>{{signos.calorias_quemadas}}</td>
                 </tr>
                 <tr>
                     <th scope="col">Pasos diarios</th>
-                    <td>{{s.peso_diario}}</td>
+                    <td>{{signos.pasos_diario}}</td>
                 </tr>
                 <tr>
                     <th scope="col">Distancia recorrida</th>
-                    <td>{{s.distancia_recorrida}}</td>
+                    <td>{{signos.distancia_recorrida}}</td>
                 </tr>
                 <tr>
                     <th scope="col">Ritmo cardiaco</th>
-                    <td>{{s.ritmo_cardiaco}}</td>
+                    <td>{{signos.ritmo_cardiaco}}</td>
                 </tr>
                 
-            {%endfor%}
+            
 
             </tbody>
             </table> 
