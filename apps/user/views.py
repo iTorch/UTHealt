@@ -1,12 +1,15 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.forms import AuthenticationForm
-from django.http import  HttpResponseRedirect
+from django.http import  HttpResponseRedirect, request
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, FormView, RedirectView
+from django.views.generic import CreateView, FormView, RedirectView, ListView
 from apps.user.models import User
 from apps.user.forms import FormUser,FormPersona
+from apps.Doctors.models import SignosVitales
+
 # Create your views here.
 
 
@@ -86,3 +89,26 @@ def index(request):
 
     return render(request, 'login/index.html',)
 
+    #KEVIN RAMIREZ
+
+def consultasP(request):
+    #return HttpResponse('todo va a salir bien')
+    consultaPaciente= SignosVitales.objects.all()
+    return render(request,'login/pacientes.html',{"consulta": consultaPaciente})
+    
+
+class ConsultaPasienteview(ListView):
+        model= SignosVitales
+        template_name = 'login/pacientes.html'
+        def get_queryset(self):
+            return SignosVitales.objects.filter(id_persona= self.request.user.id)
+
+        def dispatch(self, request,  *args, **kwargs):
+           
+            return super().dispatch(request, *args, **kwargs)
+        
+
+        def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            context['title'] = 'consulta de pacientes'
+            return context

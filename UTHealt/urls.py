@@ -15,8 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from apps.user.views import SolicitudCreate, login_view, logout_view, index
-
+from apps.user.views import SolicitudCreate, login_view, logout_view, index, ConsultaPasienteview
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('apps.api.urls')),
@@ -25,4 +24,7 @@ urlpatterns = [
     path('login/',login_view.as_view(), name='login'),
     path('logout/' ,logout_view.as_view(), name='logout'),
     path('index/', index, name='index'),
+    #KEVIN RAMIREZ 
+    path('consultas/',ConsultaPasienteview.as_view() )
+
 ]
