@@ -53,8 +53,9 @@ class SignosVitales(models.Model):
     oxigeno = models.FloatField()
     temperatura = models.FloatField()
     calorias_quemadas = models.FloatField()
-    peso_diario = models.FloatField()
+    pasos_diario = models.IntegerField()
     distancia_recorrida = models.FloatField()
+    ritmo_cardiaco = models.FloatField()
 
     class Meta:
         db_table = 'signos_vitales'
