@@ -40,7 +40,7 @@
     </nav>
   </div>
       <div class="body">
-        <table class="table">
+        <table class="table table-bordered border-primary ">
           <thead>
             <tr>
               <th>#</th>
@@ -66,7 +66,6 @@
                 <td>{{paciente.fecha_nacimiento}}</td>
                 <td>{{paciente.genero}}</td>
                 <td>
-                    <a href="/doctors/doctor-detalle/{{ paciente.id_persona }}" type="button" class="btn btn-danger"> A</a>
                     <form method="POST">
                   <input class="btn btn-primary btnVer"  persona ="{{paciente.id_persona}}"  value="Ver signos" type="submit"></td>
                 </form>
