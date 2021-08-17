@@ -6,7 +6,9 @@ from django.contrib.auth import logout
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, FormView, RedirectView
 from apps.user.models import User
-from apps.user.forms import FormUser,FormPersona
+from apps.user.forms import *
+
+
 # Create your views here.
 
 
@@ -15,7 +17,6 @@ class SolicitudCreate(CreateView):
     model = User
     form_class = FormUser
     second_form_class = FormPersona
-
     template_name = 'login/registro.html'
     success_url = reverse_lazy('index')
 
@@ -26,6 +27,7 @@ class SolicitudCreate(CreateView):
             context['form'] = self.form_class(self.request.GET)
         if 'form2' not in context:
             context['form2'] = self.second_form_class(self.request.GET)
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -34,7 +36,6 @@ class SolicitudCreate(CreateView):
 
         form = self.form_class(request.POST)
         form2 = self.second_form_class(request.POST)
-
         # evaluar si son valores son validos para guardarlos
         if form.is_valid() and form2.is_valid():
             pwd = form.cleaned_data['password']
@@ -51,7 +52,11 @@ class SolicitudCreate(CreateView):
             registro.persona = form2.save()
             registro.save()
             for g in form.cleaned_data['groups']:
-                registro.groups.add(g)    #guardar grupos
+                registro.groups.add(g) #guardar grupos
+
+
+
+
 
             return HttpResponseRedirect(self.get_success_url())
         else:
