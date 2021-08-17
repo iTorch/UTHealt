@@ -43,4 +43,5 @@ class PacienteDetalle(DetailView):
         context = super().get_context_data(**kwargs)
         #se genera el nuevo contexto y el modelo signos con base al id 
         context['signos'] = SignosVitales.objects.filter(id_persona= self.kwargs['pk'])
+        #se regresa el contexto 
         return context
