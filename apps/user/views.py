@@ -1,3 +1,4 @@
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
@@ -9,17 +10,12 @@ from apps.user.models import User
 from apps.user.forms import *
 
 
-# Create your views here.
-
-
-
 class SolicitudCreate(CreateView):
     model = User
     form_class = FormUser
     second_form_class = FormPersona
     template_name = 'login/registro.html'
     success_url = reverse_lazy('index')
-
 
     def get_context_data(self, **kwargs):
         context = super(SolicitudCreate, self).get_context_data(**kwargs)
@@ -54,20 +50,18 @@ class SolicitudCreate(CreateView):
             for g in form.cleaned_data['groups']:
                 registro.groups.add(g) #guardar grupos
 
-
-
-
-
             return HttpResponseRedirect(self.get_success_url())
         else:
             return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
+
 class logout_view(RedirectView):
-    pattern_name = 'login'
+    pattern_name = 'user:login'
 
     def dispatch(self, request, *args, **kwargs):
         logout(request)
         return super().dispatch(request, *args, **kwargs)
+
 
 class login_view(FormView):
     form_class = AuthenticationForm
@@ -75,7 +69,6 @@ class login_view(FormView):
     success_url = reverse_lazy('index')
 
     def dispatch(self, request, *args, **kwargs):
-
         if request.user.is_authenticated: #verificar si un usuario se encuentra logueado
            return HttpResponseRedirect(self.success_url)
         return super().dispatch(request, *args, **kwargs)
@@ -89,7 +82,21 @@ class login_view(FormView):
         context['title'] = 'Iniciar Sesion'
         return context
 
-def index(request):
 
-    return render(request, 'login/index.html',)
+class LoginFormView(LoginView):
+    form_class = AuthenticationForm
+    template_name = 'login/login.html'
+    redirect_authenticated_user = True
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data( **kwargs)
+        context['title'] = 'Iniciar Sesion'
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+
+def index(request):
+    return HttpResponseRedirect(reverse_lazy('doctor:detalle',args =[request.user.id]))
 

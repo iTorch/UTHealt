@@ -6,8 +6,7 @@ from django.views.generic import ListView, DetailView
 from apps.Doctors.models import Persona, SignosVitales
 import json
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
-#importacion de los decoradores 
+#from dateutil.relativedelta import relativedelta
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
