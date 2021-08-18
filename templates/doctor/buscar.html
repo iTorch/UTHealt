@@ -1,0 +1,91 @@
+{% extends 'base.html'%}
+
+  
+{%block content%}
+      <div class="body row">
+        <div class="col-lg-6">
+            <h1>Datos del Paciente </h1> {%for e in edadT%}{{e.0}}{%endfor%}
+                <table class="table table-bordered border-primary ">
+                <tbody>
+                    <tr>
+                        <th scope="col">nombre</th>
+                        <td>{{object.nombre}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Apellido paterno</th>
+                        <td>{{object.apellido_paterno}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Apellido materno</th>
+                        <td>{{object.apellido_materno}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Genero</th>
+                        <td>{{object.genero}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Ciudad</th>
+                        <td>{{object.ciudad}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Codigo postal</th>
+                        <td>{{object.codigo_postal}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Altura</th>
+                        <td>{{object.altura}} Metros</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Peso</th>
+                        <td>{{object.peso}} Kg</td>
+                    </tr>
+                    
+                    
+
+                </tbody>
+                </table> 
+        </div>
+        <div class="col-lg-6">
+            <h1>Signos del Paciente </h1>
+            <table class="table table-bordered border-primary ">
+            <tbody>
+            {%if signos%}
+                <tr>
+                    <th scope="col">Oxigeno</th>
+                    <td>{{signos.oxigeno}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Temperatura</th>
+                    <td>{{signos.temperatura}}</td> 
+                </tr>
+                <tr>
+                    <th scope="col">Calorias quemadas</th>
+                    <td>{{signos.calorias_quemadas}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Pasos diarios</th>
+                    <td>{{signos.pasos_diario}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Distancia recorrida</th>
+                    <td>{{signos.distancia_recorrida}}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Ritmo cardiaco</th>
+                    <td>{{signos.ritmo_cardiaco}}</td>
+                </tr>
+                {%else%}
+                    <h2 class="text text-danger">Aun no se han registrado signos</h2>
+                {%endif%}
+
+            </tbody>
+            </table> 
+        </div>
+
+      </div>
+      <div class="footer">
+            <a href="{%url 'doctor:index'%}" class=" btn btn-warning"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+              </svg> Regresar</a>
+      </div>
+{%endblock%}

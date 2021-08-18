@@ -1,0 +1,62 @@
+{% extends 'base.html'%}
+{%load static%}
+{%block head%}
+    <!-- necesarias para dataTable--->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css"/>
+    <link rel="stylesheet" href="{% static 'css/dataTable.css' %}"
+    
+{%endblock%}  
+{%block content%}
+	 
+	 <nav class=" navbar navbar-light bg-light">
+          <div class="container-fluid">
+            <h1> Pacientes</h1>
+            <form class="d-flex" method="GET">
+              <input class="form-control me-10"  type="search" placeholder="Buscar Paciente" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit" id="getPacientes" >Search</button>
+            </form>
+          </div>
+        </nav>
+    <div class="body col-lg-12">
+        <table class="table table-bordered border-primary" id="tablaPrincipal">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Apellido parteno</th>
+              <th>Apellido materno</th>
+              <th>Fecha de nacimiento</th>
+              <th>genero</th>
+              <th>Select</th>
+            </tr>
+          </thead>
+          <tbody id ="tbody">  
+          {%if object_list%}
+          {%for paciente in object_list%}
+            <tr>
+                <td></td>
+                <td><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                </svg> {{paciente.nombre}}</td>
+                <td>{{paciente.apellido_paterno}}</td> 
+                <td>{{paciente.apellido_materno}}</td>
+                <td>{{paciente.fecha_nacimiento}}</td>
+                <td>{{paciente.genero}}</td>
+                <td>
+                    <form method="POST">
+                  <input class="btn btn-primary btnVer"  persona ="{{paciente.id_persona}}"  value="Ver signos" type="submit"></td>
+                </form>
+            </tr>
+          {%endfor%}
+          {%else%}
+              <center><h3 class="text alert-danger">No hay registros de pacientes</h3></center>
+          {%endif%}
+          </tbody>
+        </table> 
+    </div>
+{%endblock%}
+<!--bloque de javaScript-->
+{%block javaScript%}
+  
+{%endblock%}
