@@ -54,7 +54,7 @@ class PersonaMedico(models.Model):
 class SignosVitales(models.Model):
     id_signos_vitales = models.AutoField(primary_key=True)
     id_persona = models.ForeignKey(Persona, on_delete=models.PROTECT, db_column='id_persona')
-    oxigeno = models.FloatField()
+    oxigeno = models.IntegerField()
     temperatura = models.FloatField()
     calorias_quemadas = models.FloatField()
     pasos_diario = models.IntegerField()

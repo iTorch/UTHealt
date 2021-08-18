@@ -17,7 +17,7 @@
           <a class="navbar-brand" href="#">
             <img src="{%static 'images/image002.png'%}" alt="50%" width="50%" height="30%" class="d-inline-block align-text-top">
           </a>
-          <button class="btn btn-danger">Cerrar sesion </button>
+          <a href="{% url 'user:logout' %}" class="btn btn-danger">Cerrar sesion </a>
         </div>
       </nav>
     </nav>
