@@ -7,12 +7,14 @@ from apps.Doctors.models import Persona, SignosVitales
 import json
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+#importacion de los decoradores 
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
+        
 
     
 #clase para el index del doctor 
@@ -22,13 +24,14 @@ class PacientesList(ListView):
     template_name = 'doctor/indexDoctor.html'
     
     #decorador de los metodos POST
-    #@login_required
+    @method_decorator(login_required)
     @method_decorator(csrf_exempt)
     def dispatch(self,request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     
     def post(self,request, *args, **kwargs):
         #regreso de todos los datos del ID     
+        
         doc = {}
         doc = Persona.objects.get(pk = request.POST['id']).toJson()
         return JsonResponse(doc)
@@ -38,6 +41,11 @@ class PacienteDetalle(DetailView):
     #carga del modelo de personas para el template de detalle 
     model = Persona
     template_name = 'doctor/buscar.html'
+
+    @method_decorator(login_required)
+    def dispatch(self,request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
 
     
     def get_context_data(self, **kwargs):

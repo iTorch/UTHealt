@@ -1,7 +1,4 @@
 $(function(){
-
-    
-    
     //se selecciona el boton por su evento onclick 
     $('.btnVer').on('click',function(evt){
         evt.preventDefault();
@@ -23,4 +20,9 @@ $(function(){
 
         })
     });
+    //se selecciona el boton 
+    $('.cerrar').on('click',function(){
+        //se manda a la ruta logout
+        location.href=(`/logout/`)
+    })
 })

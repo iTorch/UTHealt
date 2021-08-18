@@ -1,46 +1,24 @@
+{% extends 'base.html'%}
 {%load static%}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <!-- dataTable-
-    <link rel="stylesheet" href="{% static 'lib/datatables-1.10.20/css/dataTables.bootstrap4.min.css' %}"/>
-    <link rel="stylesheet" href="{% static 'lib/datatables-1.10.20/plugins/responsive-2.2.3/css/responsive.bootstrap4.min.css' %}"/>
-    <script src="{% static 'lib/datatables-1.10.20/js/jquery.dataTables.js' %}"></script>
-    <script src="{% static 'lib/datatables-1.10.20/js/dataTables.bootstrap4.min.js' %}"></script>
-    <script src="{% static 'lib/datatables-1.10.20/plugins/responsive-2.2.3/js/dataTables.responsive.min.js' %}"></script>
-    <script src="{% static 'lib/datatables-1.10.20/plugins/responsive-2.2.3/js/responsive.bootstrap4.min.js' %}"></script>
-    -->
-    <title>Doctor</title>
-  </head>
-<body>
-  <div class="header">
-    <nav class="barratop">
-      <nav class="navbar navbar-light bg-light" >
-        <div class="container-fluid" id="barratop">
-          <a class="navbar-brand" href="#">
-            <img src="{%static 'images/image002.png'%}" alt="50%" width="50%" height="30%" class="d-inline-block align-text-top">
-          </a>
-          <button class="btn btn-danger">Cerrar sesion </button>
-        </div>
-      </nav>
-    </nav>
-    <nav class=" navbar navbar-light bg-light">
-      <div class="container-fluid">
-        <h1> Pacientes</h1>
-        <form class="d-flex" method="GET">
-          <input class="form-control me-10"  type="search" placeholder="Buscar Paciente" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit" id="getPacientes" >Search</button>
-        </form>
-      </div>
-    </nav>
-  </div>
-      <div class="body">
-        <table class="table table-bordered border-primary ">
+{%block head%}
+    <!-- necesarias para dataTable--->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css"/>
+    <link rel="stylesheet" href="{% static 'css/dataTable.css' %}"
+    
+{%endblock%}  
+{%block content%}
+	 
+	 <nav class=" navbar navbar-light bg-light">
+          <div class="container-fluid">
+            <h1> Pacientes</h1>
+            <form class="d-flex" method="GET">
+              <input class="form-control me-10"  type="search" placeholder="Buscar Paciente" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit" id="getPacientes" >Search</button>
+            </form>
+          </div>
+        </nav>
+    <div class="body col-lg-12">
+        <table class="table table-bordered border-primary" id="tablaPrincipal">
           <thead>
             <tr>
               <th>#</th>
@@ -76,14 +54,9 @@
           {%endif%}
           </tbody>
         </table> 
-      </div>
-      
-</body>
-    
-    <script src="{%static 'lib/jquery/jquery-3.6.0.min.js'%}" ></script>
-    <script src="{% static 'js/DoctorAjxs.js' %}" charset="utf-8">
-     
-
-    </script>
-      
-</html>
+    </div>
+{%endblock%}
+<!--bloque de javaScript-->
+{%block javaScript%}
+  
+{%endblock%}
