@@ -23,6 +23,6 @@ $(function(){
     //se selecciona el boton 
     $('.cerrar').on('click',function(){
         //se manda a la ruta logout
-        location.href=(`/logout/`)
+        location.href=(`/user/logout/`)
     })
 })
