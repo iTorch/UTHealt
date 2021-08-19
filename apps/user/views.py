@@ -15,7 +15,7 @@ class SolicitudCreate(CreateView):
     form_class = FormUser
     second_form_class = FormPersona
     template_name = 'login/registro.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('user:index')
 
     def get_context_data(self, **kwargs):
         context = super(SolicitudCreate, self).get_context_data(**kwargs)
@@ -98,5 +98,7 @@ class LoginFormView(LoginView):
 
 
 def index(request):
-    return HttpResponseRedirect(reverse_lazy('doctor:detalle',args =[request.user.id]))
-
+    print(request.user)
+    if request.user.groups.filter(name='Paciente').exists():
+        return HttpResponseRedirect(reverse_lazy('doctor:detalle',args =[request.user.persona.id_persona]))
+    return HttpResponseRedirect(reverse_lazy('doctor:index'))
