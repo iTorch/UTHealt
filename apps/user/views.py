@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.contrib.auth.views import LoginView
+from django.shortcuts import render
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login
@@ -9,18 +10,12 @@ from apps.user.models import User
 from apps.user.forms import *
 
 
-# Create your views here.
-
-
-
 class SolicitudCreate(CreateView):
     model = User
     form_class = FormUser
     second_form_class = FormPersona
-    third_form_class = FormMP
     template_name = 'login/registro.html'
-    success_url = reverse_lazy('index')
-
+    success_url = reverse_lazy('user:index')
 
     def get_context_data(self, **kwargs):
         context = super(SolicitudCreate, self).get_context_data(**kwargs)
@@ -28,8 +23,7 @@ class SolicitudCreate(CreateView):
             context['form'] = self.form_class(self.request.GET)
         if 'form2' not in context:
             context['form2'] = self.second_form_class(self.request.GET)
-        if 'form3' not  in context:
-            context['form3'] = self.third_form_class(self.request.GET)
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -38,7 +32,6 @@ class SolicitudCreate(CreateView):
 
         form = self.form_class(request.POST)
         form2 = self.second_form_class(request.POST)
-        form3 = self.third_form_class(request.POST)
         # evaluar si son valores son validos para guardarlos
         if form.is_valid() and form2.is_valid():
             pwd = form.cleaned_data['password']
@@ -56,18 +49,19 @@ class SolicitudCreate(CreateView):
             registro.save()
             for g in form.cleaned_data['groups']:
                 registro.groups.add(g) #guardar grupos
-            registro.id_persona = form3.save()
 
             return HttpResponseRedirect(self.get_success_url())
         else:
             return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
+
 class logout_view(RedirectView):
-    pattern_name = 'login'
+    pattern_name = 'user:login'
 
     def dispatch(self, request, *args, **kwargs):
         logout(request)
         return super().dispatch(request, *args, **kwargs)
+
 
 class login_view(FormView):
     form_class = AuthenticationForm
@@ -75,20 +69,35 @@ class login_view(FormView):
     success_url = reverse_lazy('index')
 
     def dispatch(self, request, *args, **kwargs):
-
         if request.user.is_authenticated: #verificar si un usuario se encuentra logueado
-           return redirect(self.success_url)
+           return HttpResponseRedirect(self.success_url)
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         login(self.request, form.get_user())
-        return redirect(self.success_url)
+        return HttpResponseRedirect(self.success_url)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data( **kwargs)
+        context['title'] = 'Iniciar Sesion'
         return context
 
+
+class LoginFormView(LoginView):
+    form_class = AuthenticationForm
+    template_name = 'login/login.html'
+    redirect_authenticated_user = True
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data( **kwargs)
+        context['title'] = 'Iniciar Sesion'
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+
 def index(request):
-
-    return render(request, 'login/index.html',)
-
+    if request.user.groups.filter(name='Paciente').exists():
+        return HttpResponseRedirect(reverse_lazy('doctor:detalle',args =[request.user.persona.id_persona]))
+    return HttpResponseRedirect(reverse_lazy('doctor:index'))
