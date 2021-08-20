@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from django.conf import settings
+from django.conf.urls.static import static
 from apps.user.views import SolicitudCreate, login_view, logout_view, index, LoginFormView
 
 urlpatterns = [
@@ -24,4 +25,5 @@ urlpatterns = [
     path('user/', include('apps.user.urls')),
     #rutas de doctor
     path('doctors/',include("apps.Doctors.urls")),
-]
+    path('', index, name='index'),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

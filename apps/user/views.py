@@ -15,7 +15,7 @@ class SolicitudCreate(CreateView):
     form_class = FormUser
     second_form_class = FormPersona
     template_name = 'login/registro.html'
-    success_url = reverse_lazy('user:index')
+    success_url = reverse_lazy('index')
 
     def get_context_data(self, **kwargs):
         context = super(SolicitudCreate, self).get_context_data(**kwargs)

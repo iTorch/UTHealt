@@ -220,7 +220,7 @@ class Login(ObtainAuthToken):
 class Logout(APIView):
     def post(self, request, *arg, **kwargs):
         try:
-            token = request.POST.get('token')
+            token = request.data['token']
             token = Token.objects.filter(key = token).first()
             if token:
                 user = token.user

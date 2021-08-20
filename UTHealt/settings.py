@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
-
+import UTHealt.db as db
 from django.contrib.auth import login
 
 
@@ -27,9 +27,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-&tyi$22vwz*+%pq63&1m9cxl3#%odkz#kkv)^z#lss#cho9h4w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+#Deploy
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+#Deploy
 
 
 # Application definition
@@ -58,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'UTHealt.urls'
@@ -81,23 +84,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'UTHealt.wsgi.application'
 
-
+DATABASES = db.POSTGRESQL
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+"""import dj_database_url
+from decouple import config
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'uthealt',
-        'USER' : 'root',
-        'PASSWORD' : '',
-        'HOST' : 'localhost',
-        'PORT' : '3306',
-        'OPTIONS' : {
-            'sql_mode' : 'traditional',
-        }
-    }
-}
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}"""
 
 
 # Password validation
@@ -122,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-mx'
 
 TIME_ZONE = 'UTC'
 
@@ -135,7 +131,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
@@ -148,4 +144,6 @@ LOGIN_URL = "/user/login/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'user.User'
-LOGIN_REDIRECT_URL = 'user:index'
+LOGIN_REDIRECT_URL = 'index'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

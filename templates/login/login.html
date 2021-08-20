@@ -12,9 +12,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>{{ title }}</title>
 </head>
-
 <body>
-            <!-- NavBar-->
     <div class="header">
         <nav class="barratop">
           <nav class="navbar navbar-light bg-light" >
@@ -44,20 +42,16 @@
                             <div class="form-group">
                                 {{ form|crispy}}
                             </div>
-
                             <div class=" text-center">
                                 <button type="submit" class="btn btn-dark">Iniciar Sesión</button>
                                 <a href="{%url 'user:registro'%}" class=" btn btn-dark"> Registrarse</a>
                             </div>
-
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
-
             <!-- footer -->
         <footer class=" page_footer site-footer">
             <div class="container">
@@ -69,6 +63,5 @@
                 </div>
             </div>
         </footer>
-
 </body>
 </html>
