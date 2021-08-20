@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-&tyi$22vwz*+%pq63&1m9cxl3#%odkz#kkv)^z#lss#cho9h4w
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #Deploy
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 #Deploy
@@ -84,16 +84,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'UTHealt.wsgi.application'
 
-DATABASES = db.POSTGRESQL
+#DATABASES = db.POSTGRESQL
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-"""import dj_database_url
+import dj_database_url
 from decouple import config
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL')
     )
-}"""
+}
 
 
 # Password validation
